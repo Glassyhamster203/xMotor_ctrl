@@ -3,5 +3,5 @@
     "board": "esp32:esp32:esp32c3",
     "programmer": "esp32:esptool",
     "sketch": "main.ino",
-    "port": "/dev/ttyACM0"
+    "port": "/dev/ttyACM1"
 }

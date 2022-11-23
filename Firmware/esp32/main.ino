@@ -1,10 +1,10 @@
 
-#include <stdio.h>
+
 #include <WiFi.h>
 #include <WiFiClient.h>
 #include <WiFiAP.h>
 #include "index.h"
-#include <string.h>
+
 
 // Set the AP
 const char *ssid = "HOMO";
@@ -17,13 +17,13 @@ void setup()
 
   Serial.begin(115200);
   Serial.println();
-  // Serial.println("Configuring access point...");
+  Serial.println("Configuring access point...");
 
   // You can remove the password parameter if you want the AP to be open.
   WiFi.softAP(ssid, password);
   IPAddress IPaddr = WiFi.softAPIP();
-  // Serial.print("AP IP address: ");
-  // Serial.println(IPaddr);
+  Serial.print("AP IP address: ");
+  Serial.println(IPaddr);
   server.begin();
 
   // Serial.println("Server started");
@@ -37,6 +37,7 @@ void loop()
   {
     String currentLine = "";
     char c;
+    Serial.println("connected");
     while (client.connected())
     {
 
@@ -47,12 +48,12 @@ void loop()
 
         if (c == '\n')
         {
-          if (currentLine.length() == 43)
-          {
+          // if (currentLine.length() == 43)
+          // {
             // GET /rocker?var=rocker&val=$05$05$ HTTP/1.1
-            Serial.println(currentLine.substring(28, 33));
+            Serial.println(currentLine);
             //  Serial.println(currentLine.substring(,));
-          }
+          // }
 
           //   sscanf(currentLine.c_str(), "GET /rocker?var=rocker&val=$%4s", Data);
 

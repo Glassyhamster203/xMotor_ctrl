@@ -8,15 +8,17 @@
 
 
 <body>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <div class="control-wrapper">
         <div class="control-btn control-top" onclick="motor.forward()"></div>
-        <div class="control-btn control-left" onclick="motor.left()"></div>
+        <div class="control-btn control-left" touchstart="motor.left()" ontouchend="motor.stop()"></div>
         <div class="control-btn control-bottom" onclick="motor.back()"></div>
-        <div class="control-btn control-right" onclick="motor.right()"></div>
+        <div class="control-btn control-right" ontouchstart="motor.right()" ontouchend="motor.stop()"></div>
         <div class="control-round">
             <div class="control-round-inner" onclick="motor.stop()"></div>
         </div>
     </div>
+    </meta>
 </body>
 <style>
     .control-wrapper {
@@ -48,8 +50,12 @@
         position: absolute;
         width: 60%;
         height: 60%;
-        background: #fff;
+        background: rgb(255, 255, 255);
         z-index: 2;
+    }
+    .control-btn:hover {
+
+        background: #002c38;
     }
 
     .control-btn:before {
@@ -232,12 +238,12 @@
     window.addEventListener('contextmenu', function (e) {
         e.preventDefault()
     })
-    function sendMessage(message){
-        const query = document.location.origin + "/rocker?var=rocker&val=" + "$" + message + "$" 
+    function sendMessage(message) {
+        const query = document.location.origin + "/rocker?var=rocker&val=" + "$" + message + "$"
         fetch(query)
             .then(response => {
-					console.log(`request to ${query} finished, status: ${response.status}`)
-				})
+                console.log(`request to ${query} finished, status: ${response.status}`)
+            })
     }
 
 </script>
