@@ -9,6 +9,7 @@
         "ostream": "c",
         "sstream": "c",
         "streambuf": "c",
-        "string": "cpp"
+        "string": "cpp",
+        "algorithm": "cpp"
     }
 }

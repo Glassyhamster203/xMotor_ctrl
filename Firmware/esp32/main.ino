@@ -5,7 +5,6 @@
 #include <WiFiAP.h>
 #include "index.h"
 
-
 // Set the AP
 const char *ssid = "HOMO";
 const char *password = "1145141919"; // Homo is everywhwere
@@ -48,17 +47,15 @@ void loop()
 
         if (c == '\n')
         {
-          // if (currentLine.length() == 43)
-          // {
+          if (currentLine.length() == 40)
+          {
             // GET /rocker?var=rocker&val=$05$05$ HTTP/1.1
+            // GET /rocker?var=rocker&val=$F$ HTTP/1.1
+
             Serial.println(currentLine);
-            //  Serial.println(currentLine.substring(,));
-          // }
+            Serial.println(currentLine.substring(28, 30));
+          }
 
-          //   sscanf(currentLine.c_str(), "GET /rocker?var=rocker&val=$%4s", Data);
-
-          // Serial.printf("length %d", currentLine.length());
-          // Serial.println(currentLine);
           // end the http request
           if (currentLine.length() == 0)
           {

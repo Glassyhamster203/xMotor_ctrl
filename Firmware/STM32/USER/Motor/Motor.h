@@ -18,6 +18,9 @@ void motorForward(void);
 void motorBack(void);
 void motorLeft(void);
 void motorRight(void);
+void motorHalfLeft(void);
+void motorHalfRight(void);
+
 
 void motorStart(void);
 void motorStop(void);

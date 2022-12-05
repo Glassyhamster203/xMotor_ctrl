@@ -11,11 +11,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <div class="control-wrapper">
         <div class="control-btn control-top" onclick="motor.forward()"></div>
-        <div class="control-btn control-left" touchstart="motor.left()" ontouchend="motor.stop()"></div>
+        <div class="control-btn control-left" ontouchstart="motor.left()" ontouchend="motor.stop()"></div>
         <div class="control-btn control-bottom" onclick="motor.back()"></div>
         <div class="control-btn control-right" ontouchstart="motor.right()" ontouchend="motor.stop()"></div>
         <div class="control-round">
             <div class="control-round-inner" onclick="motor.stop()"></div>
+        </div>
+
+        <div>
+            <div class="control-round-switch" onclick="motor.switch()"></div>
         </div>
     </div>
     </meta>
@@ -53,9 +57,22 @@
         background: rgb(255, 255, 255);
         z-index: 2;
     }
+
     .control-btn:hover {
 
         background: #002c38;
+    }
+
+    .control-round-inner:hover {
+
+        background: #681500;
+
+    }
+
+    .control-round-switch :hover {
+
+        background: #681500;
+
     }
 
     .control-btn:before {
@@ -172,6 +189,22 @@
         border-radius: 50%;
     }
 
+    .control-round-switch {
+        position: absolute;
+        top: 140%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        justify-content: baseline;
+        align-items: baseline;
+        width: 33%;
+        height: 33%;
+        border: 1px solid #ff0000;
+        border-radius: 50%;
+        background-color: #ff0000;
+    }
+
+
     .control-round-inner:after {
         content: "| |";
         display: block;
@@ -209,29 +242,34 @@
         forward: function () {
             //For Debug
             console.log("FORWARD")
-            sendMessage("FORWARD")
+            sendMessage("MF")
         },
         back: function () {
             //For Debug
             console.log("BACK")
-            sendMessage("BACK")
+            sendMessage("MB")
         },
 
         right: function () {
             //For Debug
             console.log("RIGHT")
-            sendMessage("RIGHT")
+            sendMessage("MR")
         },
 
         left: function () {
             //For Debug
             console.log("LEFT")
-            sendMessage("LEFT")
+            sendMessage("ML")
         },
         stop: function () {
             //For Debug
             console.log("STOP")
-            sendMessage("STOP")
+            sendMessage("MS")
+        },
+        switch: function () {
+            console.log("SWITCH")
+            sendMessage("SW")
+
         }
     }
     //禁用右键菜单

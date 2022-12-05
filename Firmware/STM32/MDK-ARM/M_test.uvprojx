@@ -138,7 +138,7 @@
           </Flash1>
           <bUseTDR>1</bUseTDR>
           <Flash2>BIN\UL2V8M.DLL</Flash2>
-          <Flash3></Flash3>
+          <Flash3>"" ()</Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
           <pFcarmGrp></pFcarmGrp>
@@ -339,7 +339,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F103x6</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;../USER;..\USER\MPU6050_BSP;..\USER\Motor</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;../USER;../USER/MPU6050_BSP;../USER/Motor;../USER/Sensor;../USER/Second</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -791,6 +791,56 @@
               <FileName>Motor.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\USER\Motor\Motor.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Sensor</GroupName>
+          <Files>
+            <File>
+              <FileName>Sensor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\USER\Sensor\Sensor.c</FilePath>
+            </File>
+            <File>
+              <FileName>Sensor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\USER\Sensor\Sensor.h</FilePath>
+            </File>
+            <File>
+              <FileName>MPU.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\USER\Sensor\MPU.c</FilePath>
+            </File>
+            <File>
+              <FileName>MPU.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\USER\Sensor\MPU.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>second</GroupName>
+          <Files>
+            <File>
+              <FileName>Second.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\USER\Second\Second.c</FilePath>
+            </File>
+            <File>
+              <FileName>ULN2003.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\USER\Second\ULN2003.c</FilePath>
+            </File>
+            <File>
+              <FileName>Second.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\USER\Second\Second.h</FilePath>
+            </File>
+            <File>
+              <FileName>ULN2003.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\USER\Second\ULN2003.h</FilePath>
             </File>
           </Files>
         </Group>

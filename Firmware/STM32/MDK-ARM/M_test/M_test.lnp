@@ -28,6 +28,10 @@
 "m_test\inv_mpu_dmp_motion_driver.o"
 "m_test\mpu6050.o"
 "m_test\motor.o"
+"m_test\sensor.o"
+"m_test\mpu.o"
+"m_test\second.o"
+"m_test\uln2003.o"
 --library_type=microlib --strict --scatter "M_test\M_test.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

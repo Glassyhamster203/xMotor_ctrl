@@ -17,20 +17,22 @@
   */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
-#include "Motor.h"
 #include "main.h"
 #include "i2c.h"
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
+
+/* Private includes ----------------------------------------------------------*/
+/* USER CODE BEGIN Includes */
 #include "IIC.h"
 #include "mpu6050.h"
 #include "inv_mpu.h"
 #include "inv_mpu_dmp_motion_driver.h"
 #include "stdio.h"
-/* Private includes ----------------------------------------------------------*/
-/* USER CODE BEGIN Includes */
-
+#include "Motor.h"
+#include "Sensor.h"
+#include "Second.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -44,7 +46,11 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-
+#include <string.h>
+#define RXBUFFERSIZE  2     //大接收字节数
+char RxBuffer[RXBUFFERSIZE];   //接收数据
+uint8_t aRxBuffer;			//接收中断缓冲
+uint8_t Uart1_Rx_Cnt = 0;		//接收缓冲计数
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
@@ -56,12 +62,12 @@
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
-
+int autoFlag = 0;
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+void serialRes(void);
 /* USER CODE END 0 */
 
 /**
@@ -71,10 +77,7 @@ void SystemClock_Config(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-	  float pitch,roll,yaw; 
-		short aacx,aacy,aacz;	
-    short gyrox,gyroy,gyroz;
-		float temp;
+	float pitch,roll,yaw; 
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -98,25 +101,30 @@ int main(void)
   MX_TIM3_Init();
   MX_I2C1_Init();
   MX_USART1_UART_Init();
+  MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
 
-/* USER CODE END 2 */
-	 MPU_Init();			//MPU6050
-   mpu_dmp_init();		//dmp
-		motorInit();
-		printf("init\r\n");
+	MPU_Init();			//MPU6050
+  mpu_dmp_init();		//dmp
+	motorInit();
+	printf("init\r\n");
+	motorForward();
+	HAL_UART_Receive_IT(&huart1, &aRxBuffer, 1);
+  /* USER CODE END 2 */
+
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+		
+			
+				
+				
+		
     /* USER CODE END WHILE */
-				HAL_Delay(5);
-        while(mpu_dmp_get_data(&pitch, &roll, &yaw));	
-        MPU_Get_Accelerometer(&aacx,&aacy, &aacz);		
-				MPU_Get_Gyroscope(&gyrox, &gyroy, &gyroz);
-        temp=MPU_Get_Temperature();
-        printf("X:%.1f  Y:%.1f  Z:%.1f \n ",roll,pitch,yaw);
+
     /* USER CODE BEGIN 3 */
+
   }
   /* USER CODE END 3 */
 }
@@ -161,7 +169,69 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
+#if 1
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+  /* Prevent unused argument(s) compilation warning */
+  //UNUSED(huart);
+  /* NOTE: This function Should not be modified, when the callback is needed,
+           the HAL_UART_TxCpltCallback could be implemented in the user file
+   */
+ 
+	if(Uart1_Rx_Cnt >= 1)  //溢出判断
+	{
+		Uart1_Rx_Cnt = 0;
+		memset(RxBuffer,0x00,sizeof(RxBuffer));
+		//HAL_UART_Transmit(&huart1, (uint8_t *)"数据溢出", 10,0xFFFF); 	
+        
+	}
+	else
+	{
+		RxBuffer[Uart1_Rx_Cnt++] = aRxBuffer;   //接收数据转存
+	}
+	serialRes();
+	//printf("done");
+	HAL_UART_Receive_IT(&huart1, (uint8_t *)&aRxBuffer, 1);   //再开启接收中�?
+}
 
+#endif
+
+void serialRes(void){
+
+		if (RxBuffer[0] == 'S')
+		{
+			if(autoFlag)
+			{
+				autoFlag = 0;
+			}
+			else{
+				autoFlag = 1;
+			}
+		}
+		else if(RxBuffer[0] == 'M'&&!autoFlag)
+		{	
+		if(RxBuffer[1] == 'F')
+				motorForward();
+			else if(RxBuffer[1] == 'B')
+				motorBack();
+			else if(RxBuffer[1] == 'L')
+				motorLeft();
+			else if(RxBuffer[1] == 'R')
+				motorRight();
+			else if(RxBuffer[1] == 'S')
+				motorStop();	
+		}
+		else if(RxBuffer[0] == 'F'){
+			Fire();
+		}
+		else if(RxBuffer[0] == 'A'){
+			if(RxBuffer[1] == 'E')
+				Catch();
+			else if(RxBuffer[1] == 'D')
+				unCatch();
+		}
+		memset(RxBuffer,0x00,sizeof(RxBuffer));
+}
 /* USER CODE END 4 */
 
 /**

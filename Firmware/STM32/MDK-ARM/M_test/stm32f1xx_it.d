@@ -29,4 +29,5 @@ m_test\stm32f1xx_it.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
 m_test\stm32f1xx_it.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h
 m_test\stm32f1xx_it.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h
 m_test\stm32f1xx_it.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
+m_test\stm32f1xx_it.o: F:\Software\ARM\ARM\ARMCC\Bin\..\include\stdio.h
 m_test\stm32f1xx_it.o: ../Core/Inc/stm32f1xx_it.h
